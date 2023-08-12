@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+import Header from "./components/Header/Header";
+import CartContextProvider from "./components/Store/HeaderContext/HeaderContextProvider";
+
+
+import DisplayMedicine from "./components/Body/DisplayMedicine";
+import CartItems from "./components/Header/Cart/CartItems";
+import BodyContextProvider from "./components/Store/BodyContext/BodyContextProvider";
 
 function App() {
+  const [showCart, setShowCart] = useState(false);
+  const showCartFn=()=>{
+    setShowCart(true);
+  }
+  const hideCart =()=>{
+    setShowCart(false);
+
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CartContextProvider>
+  
+  <BodyContextProvider>
+  <Header  showCartFn={showCartFn}/>
+      {showCart && <CartItems hideCart={hideCart}/>}
+      <DisplayMedicine/>
+  </BodyContextProvider>
+      
+    </CartContextProvider>
   );
 }
 
